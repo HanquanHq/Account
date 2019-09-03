@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 填写实例化的包名+类名，在java代码中调用语句的时候使用 -->
+<mapper namespace="cn.hanquan.mapper.AccountMapper">
+	
+	<!-- 根据账号密码查询账户信息 -->
+	<select id="selByAccnoPwd" resultType="Account" >
+		select * from account where accno=#{0} and pwd=#{1}
+	</select>
+	
+	<!-- 根据账号姓名查询账户信息 -->
+	<select id="selByAccnoName" resultType="Account">
+		select * from account where accno=#{0} and name=#{1}
+	</select>
+	
+	<!-- 根据accno修改账户余额 -->
+	<select id="updateBalanceByAccount">
+		update account set balance=balance+#{0} where accNo=#{1}
+	</select>
+</mapper>

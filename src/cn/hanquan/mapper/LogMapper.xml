@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须和接口全限定路径一致 -->
+<mapper namespace="cn.hanquan.mapper.LogMapper">
+	
+	<!-- 插入log信息 -->
+	<insert id="insLog">
+		insert into log values(default,#{0},#{1},#{2},#{3})
+	</insert>
+	
+	<!-- limit分页查询 -->	
+	<select id="selByPage" resultType="Log">
+		select * from log limit #{0}, #{1}
+	</select>
+	
+	<!-- 查询总数 -->
+	<select id="selCount" resultType="int">
+		select count(*) from log
+	</select>
+	
+	<!-- 动态sql查询 -->
+	<select id="selDynamic" resultType="Log">
+		select * from log
+		<where>
+			<!-- OGNL 表达式，直接写key对象的属性，用and链接 -->
+			<if test="accIn!=null and accIn!=''">
+				and accIn=#{accIn}
+			</if>
+			<if test="accOut!=null and accOut!=''">
+				and accOut=#{accOut}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 修改转账原因 -->
+	<!-- id=#{id},的目的是防止<set>中没有内容，mybatis不生成set关键字导致的sql语法错误 -->
+	<update id="updReason" parameterType="Log">
+		update log
+		<set>
+			id=#{id},
+			<if test="accIn!=null and accIn!=''">
+				accin=#{accIn},
+			</if>
+			<if test="accOut!=null and accOut!=''">
+				accout=#{accOut},
+			</if>
+			<if test="money!=null and money!=''">
+				money=#{money},
+			</if>
+			<if test="reason!=null and reason!=''">
+				reason=#{reason},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper>
