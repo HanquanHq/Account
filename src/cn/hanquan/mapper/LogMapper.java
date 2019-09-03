@@ -25,12 +25,6 @@ public interface LogMapper {
 	 * @return 总记录条数
 	 */
 	int selCount();
-
-	/**
-	 * 查询所有log数据
-	 * @return
-	 */
-	List<Log> selAll();
 	
 	/**
 	 * 动态sql语句

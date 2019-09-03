@@ -13,15 +13,18 @@ import cn.hanquan.mapper.LogMapper;
 import cn.hanquan.pojo.Account;
 import cn.hanquan.pojo.Log;
 import cn.hanquan.service.AccountService;
+import cn.hanquan.util.MyBatisUtil;
 
 public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public int transfer(Account accIn, Account accOut,String reason) throws IOException {
 		// 使用mybatis
-		InputStream is = Resources.getResourceAsStream("mybatis.xml");
-		SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
-		SqlSession session = factory.openSession();
+//		InputStream is = Resources.getResourceAsStream("mybatis.xml");
+//		SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
+//		SqlSession session = factory.openSession();
+		SqlSession session = MyBatisUtil.getSession();
+		
 		// 接口为什么能实例化？使用了代理模式，实际上是给接口实现了一个类。 mapper.xml最后会被翻译成一个java类
 		AccountMapper accountMapper = session.getMapper(AccountMapper.class);
 		LogMapper logMapper = session.getMapper(LogMapper.class);
@@ -58,8 +61,8 @@ public class AccountServiceImpl implements AccountService {
 		log.setMoney(accIn.getBalance());
 		System.out.println("AccountService中的log:" + log);
 		logMapper.insLog(accOut.getAccNo(), accIn.getAccNo(), accIn.getBalance(),reason);
-		session.commit();
-		session.close();
+//		session.commit();
+//		session.close();
 		return SUCCESS;
 
 //			session.rollback();

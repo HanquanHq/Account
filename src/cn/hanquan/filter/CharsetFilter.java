@@ -23,9 +23,10 @@ public class CharsetFilter implements Filter {
 		resp.setCharacterEncoding("utf-8");
 		resp.setContentType("text/html;charset=utf-8");
 
-		System.out.println("过滤器作用");
+		System.out.println("字符集过滤器：开始");
 		// 放行
 		chain.doFilter(req, resp);
+		System.out.println("字符集过滤器：结束");
 	}
 
 	@Override
